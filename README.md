@@ -4,7 +4,7 @@ TokenVault is an innovative web platform that enables users to tokenize real-wor
 
 ## Key Features
 
-![daszbord.png](https://cdn.dorahacks.io/static/files/1910b17db00bda2a624d3bf4387b6b28.png)
+![dasz.png](https://cdn.dorahacks.io/static/files/1910fe99e9653671da0c3974927b2f73.png)
 
 ![wallet.png](https://cdn.dorahacks.io/static/files/1910e6673ae730e8ce3f1814cb9b6308.png)
 
@@ -82,3 +82,20 @@ In the long term, TokenVault envisions:
 
 ## Summary 📜💡
 TokenVault is a groundbreaking platform that brings real-world assets into the digital world, enabling users to fully harness the potential of modern blockchain technologies. With TokenVault, trading and managing assets becomes simpler, more transparent, and more secure than ever before. Join the revolution in asset tokenization with TokenVault and discover new investment opportunities today! 🚀🌍
+
+
+### Alignment with Hackathon Objectives
+
+**Cross-Chain Integration:**
+- **TokenVault** will utilize Chainflip, THORChain, and Maya Protocol to facilitate seamless cross-chain trading of tokenized RWAs. This integration reduces liquidity fragmentation and enhances efficiency in asset transfers.
+
+**Developer Resources:**
+- **Chainflip SDK:** For cross-chain swaps and liquidity aggregation.
+- **THORChain & Maya Protocol:** For native asset swaps and secure cross-chain liquidity.
+
+**Hackathon Themes:**
+- **Liquidity Management:** Efficient trading of tokenized assets across chains.
+- **Portfolio Management:** Comprehensive tools for asset tracking and performance analytics.
+- **Security:** Use of smart contracts and TSS technology for transaction security.
+
+###Project demo is with example data but its ready to work with real ones
