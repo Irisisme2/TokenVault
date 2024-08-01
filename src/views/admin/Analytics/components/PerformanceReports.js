@@ -34,7 +34,13 @@ import {
 } from 'recharts';
 import { DownloadIcon, SearchIcon, InfoIcon } from '@chakra-ui/icons';
 import Card from "components/card/Card";
-import { saveAs } from 'file-saver'; // For exporting files
+import { saveAs } from 'file-saver';
+import {
+  generateDepositAddress,
+  executeSwap,
+  openDepositChannel,
+  executeDirectVaultTrade
+} from 'utils/ChainflipAPI';
 
 // Sample data for performance charts
 const performanceData = {
@@ -79,24 +85,29 @@ const reportData = [
 const PerformanceReports = () => {
   const [chartType, setChartType] = useState('portfolio');
   const [currency, setCurrency] = useState('USD');
-  const [showChart, setShowChart] = useState('Line'); // Toggle between Line and Bar charts
+  const [showChart, setShowChart] = useState('Line');
   const [searchQuery, setSearchQuery] = useState('');
-  const [realTimeData, setRealTimeData] = useState(performanceData.portfolio); // Simulated real-time data
+  const [realTimeData, setRealTimeData] = useState(performanceData.portfolio);
+  const [selectedTokenFrom, setSelectedTokenFrom] = useState('BTC');
+  const [selectedTokenTo, setSelectedTokenTo] = useState('ETH');
+  const [amount, setAmount] = useState('');
+  const [destinationAddress, setDestinationAddress] = useState('');
+  const [isDirectTrade, setIsDirectTrade] = useState(false);
+  const [depositAddress, setDepositAddress] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
 
   useEffect(() => {
-    // Simulate real-time data updates
     const interval = setInterval(() => {
       setRealTimeData(prevData => {
         const newData = prevData.map((data, index) => ({
           ...data,
-          value: data.value + Math.random() * 100000 - 50000, // Simulate fluctuation
+          value: data.value + Math.random() * 100000 - 50000,
         }));
         return newData;
       });
-    }, 5000); // Update every 5 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -115,14 +126,36 @@ const PerformanceReports = () => {
   };
 
   const handleSearch = () => {
-    // Implement search functionality here
     console.log(`Search for: ${searchQuery}`);
   };
 
   const downloadReport = (format) => {
-    // Example function to simulate report download
     const blob = new Blob([`Report in ${format} format`], { type: 'text/plain;charset=utf-8' });
     saveAs(blob, `report.${format}`);
+  };
+
+  const handleExchange = async () => {
+    if (!amount || isNaN(amount) || amount <= 0) {
+      console.log("Invalid amount. Please enter a valid amount.");
+      return;
+    }
+
+    try {
+      if (isDirectTrade) {
+        await executeDirectVaultTrade(selectedTokenFrom, selectedTokenTo, amount, destinationAddress);
+        console.log(`Direct vault trade executed: ${amount} ${selectedTokenFrom} to ${selectedTokenTo}.`);
+      } else {
+        const depositResponse = await openDepositChannel(selectedTokenFrom, amount, 'DestinationChainName', destinationAddress);
+        setDepositAddress(depositResponse.address);
+
+        await generateDepositAddress(selectedTokenFrom, amount);
+        await executeSwap(selectedTokenFrom, selectedTokenTo, amount);
+
+        console.log(`Successfully exchanged ${amount} ${selectedTokenFrom} to ${selectedTokenTo}. Deposit address: ${depositResponse.address}`);
+      }
+    } catch (error) {
+      console.error('Error processing exchange:', error.message);
+    }
   };
 
   return (
@@ -188,6 +221,33 @@ const PerformanceReports = () => {
           </ResponsiveContainer>
         </Card>
 
+        {/* Chainflip Exchange */}
+        <Card>
+          <Text fontSize="xl" fontWeight="bold" mb={4}>Chainflip Exchange</Text>
+
+          <Select placeholder='From Token' value={selectedTokenFrom} onChange={(e) => setSelectedTokenFrom(e.target.value)}>
+            {currencies.map(token => (
+              <option key={token} value={token}>{token}</option>
+            ))}
+          </Select>
+
+          <Select placeholder='To Token' value={selectedTokenTo} onChange={(e) => setSelectedTokenTo(e.target.value)} mt='4'>
+            {currencies.map(token => (
+              <option key={token} value={token}>{token}</option>
+            ))}
+          </Select>
+
+          <Input placeholder='Amount' type='number' value={amount} onChange={(e) => setAmount(e.target.value)} mt='4' />
+
+          <Input placeholder='Destination Address' value={destinationAddress} onChange={(e) => setDestinationAddress(e.target.value)} mt='4' />
+
+          <Button onClick={handleExchange} colorScheme='blue' mt='4'>Exchange</Button>
+          <Button onClick={() => setIsDirectTrade(!isDirectTrade)} colorScheme='teal' mt='4' ml='4'>
+            {isDirectTrade ? 'Switch to Deposit Channel' : 'Switch to Direct Vault Trade'}
+          </Button>
+          {depositAddress && <Text mt='4'>Deposit Address: {depositAddress}</Text>}
+        </Card>
+
         {/* Detailed Reports */}
         <Card>
           <Text fontSize="xl" fontWeight="bold" mb={4}>Detailed Reports</Text>
@@ -238,5 +298,3 @@ const PerformanceReports = () => {
 };
 
 export default PerformanceReports;
-
-

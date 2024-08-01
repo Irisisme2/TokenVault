@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const CHAINFLIP_API_URL = 'https://api.chainflip.io'; // Replace with actual Chainflip API URL
 
-// Function to generate a deposit address
 export const generateDepositAddress = async (fromToken, amount) => {
   try {
     const response = await axios.post(`${CHAINFLIP_API_URL}/generate-deposit-address`, {
@@ -16,7 +15,6 @@ export const generateDepositAddress = async (fromToken, amount) => {
   }
 };
 
-// Function to execute swap via smart contract
 export const executeSwap = async (fromToken, toToken, amount) => {
   try {
     const response = await axios.post(`${CHAINFLIP_API_URL}/execute-swap`, {
@@ -30,7 +28,6 @@ export const executeSwap = async (fromToken, toToken, amount) => {
   }
 };
 
-// Function to open a Deposit Channel
 export const openDepositChannel = async (fromToken, amount, destinationChain, destinationAddress) => {
   try {
     const response = await axios.post(`${CHAINFLIP_API_URL}/open-deposit-channel`, {
@@ -45,7 +42,6 @@ export const openDepositChannel = async (fromToken, amount, destinationChain, de
   }
 };
 
-// Function to execute a direct vault trade
 export const executeDirectVaultTrade = async (fromToken, toToken, amount, destinationAddress) => {
   try {
     const response = await axios.post(`${CHAINFLIP_API_URL}/direct-vault-trade`, {
