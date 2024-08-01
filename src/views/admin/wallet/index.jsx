@@ -22,20 +22,11 @@
 
 // Chakra imports
 import { Box, SimpleGrid } from "@chakra-ui/react";
-import DevelopmentTable from "views/admin/wallet/components/DevelopmentTable";
-import CheckTable from "views/admin/wallet/components/CheckTable";
-import ColumnsTable from "views/admin/wallet/components/ColumnsTable";
-import ComplexTable from "views/admin/wallet/components/ComplexTable";
-import {
-  columnsDataDevelopment,
-  columnsDataCheck,
-  columnsDataColumns,
-  columnsDataComplex,
-} from "views/admin/wallet/variables/columnsData";
-import tableDataDevelopment from "views/admin/wallet/variables/tableDataDevelopment.json";
-import tableDataCheck from "views/admin/wallet/variables/tableDataCheck.json";
-import tableDataColumns from "views/admin/wallet/variables/tableDataColumns.json";
-import tableDataComplex from "views/admin/wallet/variables/tableDataComplex.json";
+import PortfolioSummary from "views/admin/wallet/components/PortfolioSummary";
+import BarChartComponent from "views/admin/wallet/components/BarChartComponent";
+import LineChartComponent from "views/admin/wallet/components/LineChartComponent";
+import AssetTable from "views/admin/wallet/components/AssetTable";
+
 import React from "react";
 
 export default function Settings() {
@@ -44,22 +35,24 @@ export default function Settings() {
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
         mb='20px'
-        columns={{ sm: 1, md: 2 }}
-        spacing={{ base: "20px", xl: "20px" }}>
-        <DevelopmentTable
-          columnsData={columnsDataDevelopment}
-          tableData={tableDataDevelopment}
-        />
-        <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />
-        <ColumnsTable
-          columnsData={columnsDataColumns}
-          tableData={tableDataColumns}
-        />
-        <ComplexTable
-          columnsData={columnsDataComplex}
-          tableData={tableDataComplex}
-        />
+        columns={{ base: 1, md: 2 }}
+        spacing={{ base: "20px", xl: "20px" }}
+        templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', xl: 'repeat(2, 1fr)' }}
+      >
+        <Box gridColumn={{ md: 'span 1', xl: 'span 1' }}>
+          <PortfolioSummary />
+        </Box>
+        <Box gridColumn={{ md: 'span 1', xl: 'span 1' }}>
+          <BarChartComponent 
+          />
+        </Box>
       </SimpleGrid>
+      <Box width="100%" mb='20px'>
+      <LineChartComponent />
+      </Box>
+        <Box gridColumn={{ md: 'span 1', xl: 'span 1' }}>
+        <AssetTable />
+      </Box>
     </Box>
   );
 }

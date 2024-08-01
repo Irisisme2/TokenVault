@@ -6,6 +6,8 @@ TokenVault is an innovative web platform that enables users to tokenize real-wor
 
 ![daszbord.png](https://cdn.dorahacks.io/static/files/1910b17db00bda2a624d3bf4387b6b28.png)
 
+![wallet.png](https://cdn.dorahacks.io/static/files/1910e6673ae730e8ce3f1814cb9b6308.png)
+
 ### 1. Asset Tokenization 📜🔐
 TokenVault allows users to convert their real-world assets into digital tokens. Users can register their assets by providing detailed information and ownership documents. 📝📁 The system generates unique tokens representing these assets on the blockchain, enabling easier trading and management. 🪙🌉
 
