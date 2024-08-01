@@ -15,6 +15,8 @@ TokenVault allows users to convert their real-world assets into digital tokens. 
 ### 2. Token Trading 💹🔄
 The platform enables users to trade RWA tokens on various integrated platforms such as Chainflip, THORChain, and Maya Protocol. Users can track transactions and trading history for each token, ensuring full transparency and control over their assets. 📊🔍
 
+![analysis.png](https://cdn.dorahacks.io/static/files/1910ef2de9bc2ca8a7dd2fd4a48b253f.png)
+
 ### 3. Portfolio Management 📈📊
 TokenVault offers advanced tools for portfolio management, allowing users to view all tokenized assets in one place. Users can monitor the value and performance of their assets in real-time and receive notifications about changes in portfolio value or important market events. 📲📉
 
@@ -28,6 +30,8 @@ TokenVault offers advanced tools for portfolio management, allowing users to vie
 
 ### 4. Security and Trust 🛡️🔒
 User and asset security is a priority for TokenVault. The platform uses smart contracts and decentralized verification mechanisms to confirm asset ownership. 📝🔗 Additionally, Threshold Signature Scheme (TSS) technology ensures transaction security, minimizing risks associated with asset storage and trading. 🧩🛡️
+
+![trans.png](https://cdn.dorahacks.io/static/files/1910f113f046ff866299ff143a082e64.png)
 
 ### 5. User-Friendly Interface 🖥️📱
 TokenVault features a modern and intuitive user interface that simplifies asset registration, trading, and portfolio management. The responsive design ensures the platform is easy to use on both desktop and mobile devices. 🖥️📱
