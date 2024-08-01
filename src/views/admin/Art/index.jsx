@@ -1,118 +1,82 @@
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
+import React, { useState } from "react";
+import { Box, Button, SimpleGrid, Text, useColorModeValue } from "@chakra-ui/react";
+import ArtPiece from "components/card/ArtPiece"; // Załóżmy, że masz komponent ArtPiece
+import Scream from "assets/img/art/Scream.png";
+import Memory from "assets/img/art/Memory.png";
+import StarryNight from "assets/img/art/Starry Night.png";
+import Avatar1 from "assets/img/avatars/avatar1.png";
+import Avatar2 from "assets/img/avatars/avatar2.png";
+import Avatar3 from "assets/img/avatars/avatar3.png";
+import Avatar4 from "assets/img/avatars/avatar4.png";
+import ArtDetails from "views/admin/Art/components/ArtDetails"; // Użyjmy przykładowo ArtDetails
 
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2023 Horizon UI (https://www.horizon-ui.com/)
+const artData = [
+  {
+    name: 'Starry Night',
+    artist: 'Vincent van Gogh',
+    image: StarryNight,
+    description: 'A famous painting by Vincent van Gogh, depicting a starry night sky.',
+    value: 5000000,
+  },
+  {
+    name: 'The Persistence of Memory',
+    artist: 'Salvador Dalí',
+    image: Memory,
+    description: 'A surrealist masterpiece by Salvador Dalí, known for its melting clocks.',
+    value: 7500000,
+  },
+  {
+    name: 'The Scream',
+    artist: 'Edvard Munch',
+    image: Scream,
+    description: 'An iconic painting by Edvard Munch, expressing existential dread.',
+    value: 6000000,
+  },
+];
 
-* Designed and Coded by Simmmple
+export default function Art() {
+  const [selectedArt, setSelectedArt] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const textColor = useColorModeValue("secondaryGray.900", "white");
 
-=========================================================
+  const openDetailsModal = (art) => {
+    setSelectedArt(art);
+    setIsModalOpen(true);
+  };
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+  const closeDetailsModal = () => {
+    setSelectedArt(null);
+    setIsModalOpen(false);
+  };
 
-*/
-
-// Chakra imports
-import { Box, Grid } from "@chakra-ui/react";
-
-// Custom components
-import Banner from "views/admin/Art/components/Banner";
-import General from "views/admin/Art/components/General";
-import Notifications from "views/admin/Art/components/Notifications";
-import Projects from "views/admin/Art/components/Projects";
-import Storage from "views/admin/Art/components/Storage";
-import Upload from "views/admin/Art/components/Upload";
-
-// Assets
-import banner from "assets/img/auth/banner.png";
-import avatar from "assets/img/avatars/avatar4.png";
-import React from "react";
-
-export default function Overview() {
   return (
-    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      {/* Main Fields */}
-      <Grid
-        templateColumns={{
-          base: "1fr",
-          lg: "1.34fr 1fr 1.62fr",
-        }}
-        templateRows={{
-          base: "repeat(3, 1fr)",
-          lg: "1fr",
-        }}
-        gap={{ base: "20px", xl: "20px" }}>
-        <Banner
-          gridArea='1 / 1 / 2 / 2'
-          banner={banner}
-          avatar={avatar}
-          name='Adela Parkson'
-          job='Product Designer'
-          posts='17'
-          followers='9.7k'
-          following='274'
-        />
-        <Storage
-          gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3" }}
-          used={25.6}
-          total={50}
-        />
-        <Upload
-          gridArea={{
-            base: "3 / 1 / 4 / 2",
-            lg: "1 / 3 / 2 / 4",
-          }}
-          minH={{ base: "auto", lg: "420px", "2xl": "365px" }}
-          pe='20px'
-          pb={{ base: "100px", lg: "20px" }}
-        />
-      </Grid>
-      <Grid
+    <Box pt={{ base: "180px", md: "80px", xl: "80px" }}>
+      <Text
         mb='20px'
-        templateColumns={{
-          base: "1fr",
-          lg: "repeat(2, 1fr)",
-          "2xl": "1.34fr 1.62fr 1fr",
-        }}
-        templateRows={{
-          base: "1fr",
-          lg: "repeat(2, 1fr)",
-          "2xl": "1fr",
-        }}
-        gap={{ base: "20px", xl: "20px" }}>
-        <Projects
-          gridArea='1 / 2 / 2 / 2'
-          banner={banner}
-          avatar={avatar}
-          name='Adela Parkson'
-          job='Product Designer'
-          posts='17'
-          followers='9.7k'
-          following='274'
+        color={textColor}
+        fontSize='2xl'
+        ms='24px'
+        fontWeight='700'>
+        Art Collection
+      </Text>
+      <SimpleGrid columns={{ base: 1, md: 3 }} gap='20px'>
+        {artData.map((art, index) => (
+          <ArtPiece
+            key={index}
+            name={art.name}
+            artist={art.artist}
+            image={art.image}
+            details={() => openDetailsModal(art)}
+          />
+        ))}
+      </SimpleGrid>
+      {selectedArt && (
+        <ArtDetails
+          isOpen={isModalOpen}
+          onClose={closeDetailsModal}
+          art={selectedArt}
         />
-        <General
-          gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3" }}
-          minH='365px'
-          pe='20px'
-        />
-        <Notifications
-          used={25.6}
-          total={50}
-          gridArea={{
-            base: "3 / 1 / 4 / 2",
-            lg: "2 / 1 / 3 / 3",
-            "2xl": "1 / 3 / 2 / 4",
-          }}
-        />
-      </Grid>
+      )}
     </Box>
   );
 }

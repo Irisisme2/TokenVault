@@ -1,118 +1,86 @@
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
+import React, { useState } from "react";
+import { Box, Button, SimpleGrid, Text, useColorModeValue } from "@chakra-ui/react";
+import RealEstate from "components/card/RealEstate";
+import Property1 from "assets/img/properties/Property1.png";
+import Property2 from "assets/img/properties/Property2.png";
+import Property3 from "assets/img/properties/Property3.png";
+import Avatar1 from "assets/img/avatars/avatar1.png";
+import Avatar2 from "assets/img/avatars/avatar2.png";
+import Avatar3 from "assets/img/avatars/avatar3.png";
+import Avatar4 from "assets/img/avatars/avatar4.png";
+import PropertyDetails from "views/admin/RealEstate/components/PropertyDetails";
 
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2023 Horizon UI (https://www.horizon-ui.com/)
+const propertiesData = [
+  {
+    name: 'Modern Villa',
+    author: 'By John Doe',
+    image: Property1,
+    location: 'Beverly Hills, CA',
+    description: 'A modern villa with stunning views.',
+    value: 1500000,
+  },
+  {
+    name: 'Luxury Penthouse',
+    author: 'By Jane Smith',
+    image: Property2,
+    location: 'New York, NY',
+    description: 'A luxurious penthouse in the heart of the city.',
+    value: 2300000,
+  },
+  {
+    name: 'Beachfront Property',
+    author: 'By Michael Lee',
+    image: Property3,
+    location: 'Miami, FL',
+    description: 'A beachfront property with private access.',
+    value: 3200000,
+  },
+];
 
-* Designed and Coded by Simmmple
+export default function MyProperties() {
+  const [selectedProperty, setSelectedProperty] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const textColor = useColorModeValue("secondaryGray.900", "white");
 
-=========================================================
+  const openDetailsModal = (property) => {
+    setSelectedProperty(property);
+    setIsModalOpen(true);
+  };
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+  const closeDetailsModal = () => {
+    setSelectedProperty(null);
+    setIsModalOpen(false);
+  };
 
-*/
-
-// Chakra imports
-import { Box, Grid } from "@chakra-ui/react";
-
-// Custom components
-import Banner from "views/admin/RealEstate/components/Banner";
-import General from "views/admin/RealEstate/components/General";
-import Notifications from "views/admin/RealEstate/components/Notifications";
-import Projects from "views/admin/RealEstate/components/Projects";
-import Storage from "views/admin/RealEstate/components/Storage";
-import Upload from "views/admin/RealEstate/components/Upload";
-
-// Assets
-import banner from "assets/img/auth/banner.png";
-import avatar from "assets/img/avatars/avatar4.png";
-import React from "react";
-
-export default function Overview() {
   return (
-    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      {/* Main Fields */}
-      <Grid
-        templateColumns={{
-          base: "1fr",
-          lg: "1.34fr 1fr 1.62fr",
-        }}
-        templateRows={{
-          base: "repeat(3, 1fr)",
-          lg: "1fr",
-        }}
-        gap={{ base: "20px", xl: "20px" }}>
-        <Banner
-          gridArea='1 / 1 / 2 / 2'
-          banner={banner}
-          avatar={avatar}
-          name='Adela Parkson'
-          job='Product Designer'
-          posts='17'
-          followers='9.7k'
-          following='274'
-        />
-        <Storage
-          gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3" }}
-          used={25.6}
-          total={50}
-        />
-        <Upload
-          gridArea={{
-            base: "3 / 1 / 4 / 2",
-            lg: "1 / 3 / 2 / 4",
-          }}
-          minH={{ base: "auto", lg: "420px", "2xl": "365px" }}
-          pe='20px'
-          pb={{ base: "100px", lg: "20px" }}
-        />
-      </Grid>
-      <Grid
+    <Box pt={{ base: "180px", md: "80px", xl: "80px" }}>
+      <Text
         mb='20px'
-        templateColumns={{
-          base: "1fr",
-          lg: "repeat(2, 1fr)",
-          "2xl": "1.34fr 1.62fr 1fr",
-        }}
-        templateRows={{
-          base: "1fr",
-          lg: "repeat(2, 1fr)",
-          "2xl": "1fr",
-        }}
-        gap={{ base: "20px", xl: "20px" }}>
-        <Projects
-          gridArea='1 / 2 / 2 / 2'
-          banner={banner}
-          avatar={avatar}
-          name='Adela Parkson'
-          job='Product Designer'
-          posts='17'
-          followers='9.7k'
-          following='274'
+        color={textColor}
+        fontSize='2xl'
+        ms='24px'
+        fontWeight='700'>
+        My Properties
+      </Text>
+      <SimpleGrid columns={{ base: 1, md: 3 }} gap='20px'>
+        {propertiesData.map((property, index) => (
+          <RealEstate
+            key={index}
+            name={property.name}
+            author={property.author}
+            bidders={[Avatar1, Avatar2, Avatar3, Avatar4]}
+            image={property.image}
+            details={() => openDetailsModal(property)}
+          />
+        ))}
+      </SimpleGrid>
+      {selectedProperty && (
+        <PropertyDetails
+          isOpen={isModalOpen}
+          onClose={closeDetailsModal}
+          property={selectedProperty}
         />
-        <General
-          gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3" }}
-          minH='365px'
-          pe='20px'
-        />
-        <Notifications
-          used={25.6}
-          total={50}
-          gridArea={{
-            base: "3 / 1 / 4 / 2",
-            lg: "2 / 1 / 3 / 3",
-            "2xl": "1 / 3 / 2 / 4",
-          }}
-        />
-      </Grid>
+      )}
     </Box>
   );
 }
