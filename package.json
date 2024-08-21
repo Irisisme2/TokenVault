@@ -14,11 +14,13 @@
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@hypertheme-editor/chakra-ui": "^0.1.5",
+    "@openzeppelin/contracts": "^5.0.2",
     "@swapkit/sdk": "^1.1.9",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@thirdweb-dev/react": "^4.9.4",
+    "@truffle/hdwallet-provider": "^2.1.15",
     "apexcharts": "3.35.2",
     "axios": "^1.7.3",
     "babel-cli": "^6.26.0",
@@ -55,6 +57,7 @@
     "stream-http": "^3.2.0",
     "stylis": "^4.1.1",
     "stylis-plugin-rtl": "2.0.2",
+    "truffle": "^5.11.5",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
